@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>
+            {% block title %} Mon site {% endblock %}
+        </title>
+        {#
+            asset: fonction twig qui permet de charger une ressource
+            externe à la page html (image, css, js ...)
+        #}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    </head>
+    <body>
+        {#
+            mise en page : 3 instructions twig
+                -extends: héritage d'un template parent
+                -block: zone de contenu à remplir ou pas dans un template enfant
+                -include: inclusion de fichier twig
+        #}
+        <div class="container">
+            {% include 'inc/nav.html.twig' %}
+            {#création de blocs #}
+            <div class="row">
+            {% block aside %}
+                aside parent
+            {% endblock %}
+            {% block main %}{% endblock %}
+            </div>
+            {% include 'inc/footer.html.twig' %}
+        </div>
+        <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    </body>
+</html>

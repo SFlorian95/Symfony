@@ -1,0 +1,11 @@
+{# 
+    extends : permet d'hériter d'un modéle parent les modèles parents sont à placer 
+    à la racine du dossier templates
+#}
+{% extends "base.html.twig" %}
+{#
+    afficher une information : utilisation de doubles accolades
+#}
+{% block body %}
+<h1>{{ prenom }} - {{ age }} ans</h1>
+{% endblock %}

@@ -1,3 +1,6 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+# index : indetifiant unique de la route (url)
+# path : schéma de la route (url dans navigateur)
+# controller : contrôleur lié à la route / index : nom de la méthode du controleur
+index:
+    path: /
+    controller: App\Controller\DefaultController::index

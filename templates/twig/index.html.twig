@@ -1,0 +1,104 @@
+{% extends "parent.html.twig" %}
+
+{# 
+    si extends est utilisé : obligatoire de créer du contenu dans un bloc
+#}
+
+{% block title %}
+    Mise en page twig - {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <main class="col-sm-9 bg-secondary"> 
+        
+        {# 
+            filtre : application d'un filtre avec |
+        #}
+        
+        {# 
+        affichage d'une date : filtre date
+            d: jour
+            m: mois
+            Y: année sur 4 chiffres
+            h: heure
+            i: minute
+            s: seconde
+        #}
+        <time>{{ aujourdhui | date('d/m/Y') }}</time>
+        
+        {# length : nombre d'élément dans un tableau #}
+        <p>Le tableau list contient {{ list | length }} éléments</p>
+        
+        {# concaténation : symbole ~ #}
+        {% set price = 1000.50 %}
+        <p>{{ 'le prix est de ' ~ price | number_format(2,',', ' ') ~ 'euros' }}</p>
+        
+        <hr>
+        {# 
+        boucle équivalent à for each 
+        list: provient de la clé envoyée par le contrôleur
+        #}
+        {% for key, value in list %}
+            <p>la clé <i>{{ key }}</i> posséde la valeur <b>{{ value }}</b></p>
+        {% endfor %}
+        <hr>
+        {% for value in list2 %}
+            {# 
+            Si premier indice
+            pas de === en twig
+            #}
+            {% if true == loop.first %}
+             {# set permet de créer une variable#}
+             {% set css = 'style="background:red"'%}
+            {% else %}
+             {% set css = null %}
+            {% endif %}
+            
+            {# 
+                condition ternaire : raccourci if/else
+                condition à tester
+                ? > si la condition est remplie
+                : > si la condtion n'est pas remplie
+            #}
+            {% set css2 = loop.last == true ? 'style ="background:green"':null %}
+            {# 
+                trois types de balises dans twig
+                    {{ }} :affichage d'une données
+                    {##} : commentaire
+                    {#{% %} : instructions (boucle, condition..)#}
+           
+            {# dump: débogage #}
+            {{ dump(loop.first, css) }} 
+            {{ dump(true == loop.first) }}
+            {# fltre raw : desactive la protection par défaut du css, du html ..#}
+            <p {{ css | raw }} {{ css2 | raw }}>L'indice {{ loop.index0 }} posséde la valeur {{ value }}</p>
+        {% endfor %}
+        <br>
+        <a href="{{ url('index') }}">Aller sur la page d'accueil</a>
+        <br>
+        {#
+            cibler une route avec des variables d'url
+            utiliser le second paramètre de la fonction url/path
+            syntaxe se rapproche d'un objet js
+        #}
+        <a href="{{ url('hello.index', {
+            firstname: 'Florian', age: 23
+            }) }}">L'âge de Flow ???</a>
+    </main>
+    {#
+        création des liens entre routes
+        cibler l'ientifiant des routes(propriété name de l'annotation @Route)
+        fonctions twig
+            url : lien absolu > https://localhost:8000/contact
+            path : lien relatif > /contact
+    #}
+{% endblock %}
+
+{% block aside %}
+    {# parent(): permet de récupérer le contenu du bloc parent #}
+    <aside class="col-sm-3 bg-success">
+        {{ parent() }}
+        aside enfant
+    </aside>
+{% endblock %}
+
