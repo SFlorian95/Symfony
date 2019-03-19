@@ -3,3 +3,8 @@
 {% block body %}
 <h1>Vainqueur {{ date }} : {{ country }}</h1>
 {% endblock %}
+
+<a href="{{ url('friend.details',{id: 1,nom: 'Subra', prenom: 'Florian',email: 'monemail1@hotmail.fr'}) }}">Details</a>
+        <a href="{{ url('friend.details',{id: 2, nom: 'Bond', prenom: 'James',email: 'monemail2@hotmail.fr'}) }}">Details</a>
+        <a href="{{ url('friend.details',{id: 3, nom: 'Wayne', prenom: 'Bruce',email: 'monemail3@hotmail.fr'}) }}">Details</a>
+        <a href="{{ url('friend.details',{id: 4, nom: 'Jordan', prenom: 'Hal',email: 'monemail4@hotmail.fr'}) }}">Details</a>
