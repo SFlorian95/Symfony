@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+                             
+         
+    {# 
+    {{dump(form)}}
+    form : la clé envoyée par le controleur
+    twig:fonctions dédiées aux formulaires
+        form_start: crée le début de la balise <form>
+        form_end: crée la fin de la balise </form>
+        form_label : crée une balise <label>
+        form_widget : crée le champ de saisie
+        form_erros : crée le message d'erreur
+        form_help : crée un message d'aide
+    #}
+    <div class="row">
+        <div class="col">
+            <h1>Formulaire des produits</h1>
+            {# 
+            attr : ajouter des attributs HTML
+                novalidate="novalidate"
+            #}
+            {{ form_start(form, { attr : {novalidate: 'novalidate'} }) }}
+            <p>
+                {# form provient du cotroleur / name provient de la classe de formulaire#}
+                {{ form_label(form.name, 'Nom: ') }}
+                {{ form_widget(form.name, {attr: 
+                {
+                    placeholder: 'Nom du produit',
+                    autofocus: 'autofocus'
+                    }
+                }) }}
+                {{ form_errors(form.name) }}
+            </p> 
+            <p>
+                {{ form_label(form.price, 'Prix: ') }}
+                {{ form_widget(form.price) }}
+                {{ form_errors(form.price) }}
+            </p>
+            <p>
+                {{ form_label(form.description, 'Description: ') }}
+                {{ form_widget(form.description) }}
+                {{ form_errors(form.description) }}
+            </p>
+            <p>
+                {{ form_label(form.image, 'Image: ') }}
+                {{ form_widget(form.image) }}
+                {{ form_help(form.image) }}
+                {{ form_errors(form.image) }}
+            </p>
+            <p>
+                <button type="submit" class="btn btn-success">Valider</button>
+                <a href="{{ url('products.index') }}" class="btn btn-info">Retour</a>
+            </p>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

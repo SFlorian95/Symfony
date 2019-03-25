@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block body %}
+
+    {{ dump(liste) }}
+
+    {% for value in liste %}
+
+        <p> Son prénom est {{value.firstname}}, et son nom est {{value.lastname}}. 
+        {#<a href="{{url('friend.id', {id:key} )}}">Plus d'infos</a>   </p>#}
+
+    {% endfor %}
+
+{% endblock %}

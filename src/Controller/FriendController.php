@@ -1,51 +1,50 @@
 <?php
 
-
-
 namespace App\Controller;
 
+use App\Repository\FriendRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class FriendController extends AbstractController {
-   
-    
-    
+
     /**
-    * 
-    * @Route("/friend",name="friend.index")
+    * @Route("/friend", name="friend.liste")
     */
-    
-    public function index(): Response{
+
+    public function friend(FriendRepository $friendrepository): Response{
         
-        $list=[
-        'Subra Florian' => "'friend.details',{nom: 'Subra', prenom: 'Florian',email: 'monemail1@hotmail.fr'}",
-        'Bond James' => "'friend.details',{nom: 'Bond', prenom: 'James',email: 'monemail2@hotmail.fr'}",
-        'Wayne Bruce' => "'friend.details',{nom: 'Wayne', prenom: 'Bruce',email: 'monemail3@hotmail.fr'}",
-        'Jordan Hal' => "'friend.details',{nom: 'Jordan', prenom: 'Hal',email: 'monemail4@hotmail.fr'}" 
-        ];
+        $amis = $friendrepository->findAll();
+        //dd($amis);
         
-        return $this->render('friend/index.html.twig',[
-            'list' => $list
-        ]);   
+    return $this->render("friend/friendslist.html.twig", [
+        'liste' => $amis
+    ]);
+
     }
-    
-    
+
     /**
-     * 
-     * @Route("/friend/{id}/{nom}/{prenom}/{email}",name="friend.details") 
-     */
-    public function details(string $nom , string $prenom, string $email): Response{
+    * @Route("/friend/{id}", name="friend.id")
+    */
+
+    public function id(int $id, FriendRepository $friendrepository){
+        /* toujours mettre la variable dans les parametre de la fonction. */
+        /*dd($this->liste[$id]);*/
         
-       
+        $amis = $friendrepository->find($id);
         
-        return $this->render('friend/details.html.twig',[
-            
-            'nom'=> $nom,
-            'prenom'=> $prenom,
-            'email'=> $email
-        ]); 
+        return $this->render("friend/id.html.twig", [
+            'details' => $amis
+
+        ]);
+
     }
+    
+    
+
+
+
+
+
 }

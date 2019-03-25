@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset("css/style.css") }}">{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col">
+               <h1>Product</h1>
+               {# 
+                    app: variable twig permet d'accéder à certaines informations de l'application
+                    app.environment : environnement
+                    app.request : requête http
+                    app.session : session
+                    app.user : utilisateur si connecté
+                    app.flashes(clé) : affichage du message flash du formulaire                   
+               #}
+               {% for notice in app.flashes('notice') %}
+                   <p class="alert alert-success show fade"> {{ notice }} </p>
+               {% endfor %}
+               <p class="text-right"><a href="{{ url('product.form') }}" class="btn btn-primary">Ajouter</a></p>
+               <table class="table table-striped">
+                   <tr>
+                       <th>Nom</th>
+                       <th>Prix</th>
+                       <th>Description</th>
+                       <th>Image</th>
+                       <th>Actions</th>
+                   </tr>
+                   {% for product in results %}
+                       <tr>
+                           <td>{{ product.name | capitalize }}</td> 
+                           <td>{{ product.price | number_format(2, ',', ' ') }} €</td>
+                           <td>{{ product.description | capitalize }}</td>
+                           <td>
+                               <img src="{{ asset('img/'~ product.image) }}" alt="">                              
+                           </td>
+                           <td>
+                               {#
+                                création de la route
+                                    id: nom de la variable d'url utilisée dans la route
+                                    product: nom de la variable utilisée par la boucle for
+                                    product.id: propriété id de l'entitié
+                               #}
+                               <a href="{{ url("product.details",{id:product.id}) }}" class="btn btn-info">Consulter</a>
+                               <a href="{{ url("product.update",{id:product.id}) }}" class="btn btn-warning">Modifier</a>
+                               <a href="{{ url("product.delete",{id:product.id}) }}" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Supprimer</a>
+                           </td>
+                       </tr>                
+                   {% endfor %}
+               </table>
+        </div>
+    </div>
+    {# inclusion de la fenetre modale #}
+    {% include 'inc/modal.html.twig' %}
+    
+    {% block javascripts %}
+        <script src="{{ asset('js/confirmDeleteModal.js') }}"></script>
+        <script src="{{ asset('js/timeLimitConfirmAlert.js') }}"></script>
+    {% endblock %}    
+    
+    
+{% endblock %}

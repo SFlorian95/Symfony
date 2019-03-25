@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset("css/style.css") }}">{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-4">
+            <img src="{{ asset('img/' ~ result.image) }}" alt="" class="img-fluid">
+        </div>
+        <div class="col-sm-8">
+            <p>
+                <span class="font-weight-bold">Nom:</span> {{ result.name | capitalize }}
+            </p>
+            <p>
+                {{ result.description | capitalize }}
+            </p>
+            <p>
+                <span class="font-weight-bold">Prix:</span> {{ result.price | number_format(2, ',', ' ') }} €
+            </p>
+            <p>
+                <a href="{{ url("products.index") }}" class="btn btn-primary">Retour</a>           
+            </p>
+        </div>
+    </div>
+{% endblock %}
