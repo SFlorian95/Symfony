@@ -90,7 +90,7 @@ class ProductController extends AbstractController
         //dd($entity);
         
         $form = $this->createForm($type, $entity);
-        $form->handleRequest($request);
+        $form->handleRequest($request); //permet de récuperer le POST
         //dd($request);
         
         /*

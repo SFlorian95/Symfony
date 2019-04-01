@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Product;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -10,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
@@ -97,6 +100,37 @@ class ProductType extends AbstractType
                 'constraints' => $constraintsImage,
                 'help' => 'Veuillez sélectionner une image au format JPG',
                 'data_class' => null
+            ])
+            /*
+             * champ de saisie en relation avec une entité
+             *      utiliser EntityType
+             *      paramètres:
+             *              class : cibler l'entité
+             *              choice label : propriété à afficher dans le champ de saisie
+             * 
+             *              expanded : affichage de plusieurs champs; par défaut false
+             *              
+             *              multiple : sélection multiple; par défaut false
+             * 
+             * liste déroulante : expanded false / multiple false
+             * boutons radio : expanded true / multiple false
+             * checkbox : expanded true / multiple true
+             * 
+             * Pour une relation ManyToMany : 
+             *      Obligation de créer des cases à cocher
+             *      constraints Count : comptage du nombre de sélection 
+             */
+            ->add('categories', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'expanded' => true,
+                'multiple' => true,
+                'constraints' => [
+                    new Count([
+                        'min' => 1,
+                        'minMessage' => "Veuillez sélectionner une catégorie"
+                    ])
+                ]
             ])
         ;
     }

@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1>Acueil administration</h1>
+            {# 
+                accéder à l'utilisateur connecté 
+                dans twig: app.user
+                is_granted("ROLE_ADMIN") : test sur un rôle
+                IS_AUTHENTICATED_FULLY : utilisateur connecté ou déconnecté
+                logout_url : cible la route de déconnexion
+            #}
+            <p>Votre id est : {{ app.user.id }}</p>
+            <p>Votre email est : {{ app.user.email }}</p>
+            
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <p><a href="{{ logout_url() }}" class="btn btn-dark">Déconnexion</a></p>
+            {% endif %}
+            <br><br>
+            <hr>
+            {#{ dump(app.user) }#}
+            <a class="btn btn-primary" href="{{ url('products.index') }}">Produits</a>
+        </div>
+    </div>
+{% endblock %}
